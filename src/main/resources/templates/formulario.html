@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Gestión de Contactos</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Bizum</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/bizum/contactos">Contactos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/bizum/enviar">Enviar Bizum</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/bizum/operaciones">Operaciones</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    <h1>Gestión de Contactos</h1>
+
+    <!-- Botón que abre el modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#contactoModal">
+        Añadir Contacto
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="contactoModal" tabindex="-1" aria-labelledby="contactoModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" th:text="${modoEdicion} ? 'Editar contacto' : 'Nuevo contacto'">Nuevo contacto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post"
+                          th:action="${modoEdicion} ? @{/bizum/editar} : @{/bizum/nuevo}"
+                          th:object="${contacto}">
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="nombre" th:field="*{nombre}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="apellido" class="form-label">Apellido</label>
+                            <input type="text" class="form-control" id="apellido" th:field="*{apellido}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="numeroTelefono" class="form-label">Número de Teléfono</label>
+                            <input type="text" class="form-control" id="numeroTelefono" th:field="*{numeroTelefono}" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="mt-4">Listado de Contactos</h2>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Número de Teléfono</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="contacto : ${listaContactos}">
+            <td th:text="${contacto.nombre}"></td>
+            <td th:text="${contacto.apellido}"></td>
+            <td th:text="${contacto.numeroTelefono}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

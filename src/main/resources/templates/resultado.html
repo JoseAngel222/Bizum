@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Resultado del Bizum</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container mt-5">
+    <h1>Resultado del Bizum</h1>
+
+    <!-- Mostrar el mensaje del resultado -->
+    <div class="alert alert-info" role="alert" th:text="${mensaje}"></div>
+
+    <!-- Mostrar el saldo disponible -->
+    <p>Saldo disponible: <span th:text="${saldo}"></span> €</p>
+
+    <h2>Transacciones Realizadas:</h2>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Destinatario</th>
+            <th>Monto</th>
+            <th>Concepto</th>
+            <th>Fecha</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="transaccion : ${transacciones}">
+            <td th:text="${transaccion.idBizum}"></td>
+            <td th:text="${transaccion.destinatario}"></td>
+            <td th:text="${transaccion.cantidad}"></td>
+            <td th:text="${transaccion.concepto}"></td>
+            <td th:text="${transaccion.fecha}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Enlace para enviar otro Bizum -->
+    <a class="btn btn-primary" href="/bizum/enviar">Enviar otro Bizum</a>
+</div>
+
+</body>
+</html>
